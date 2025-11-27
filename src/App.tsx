@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const API_URL = 'http://13.221.57.54:8087/api/auth';
+const API_URL = 'https://13.221.57.54:8087/api/auth';
 
 interface User {
   email: string;
