@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-const API_URL = 'http://localhost:8087/api/auth';
+const API_URL = 'http://13.221.57.54:8087/api/auth';
+
+interface User {
+  email: string;
+}
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,9 +16,9 @@ function App() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
@@ -44,7 +48,7 @@ function App() {
     return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
@@ -83,7 +87,8 @@ function App() {
       
       setFormData({ email: '', password: '', confirmPassword: '' });
     } catch (err) {
-      setError(err.message || 'An error occurred');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
